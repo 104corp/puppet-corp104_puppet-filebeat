@@ -1,15 +1,15 @@
-# filebeat::install::linux
+# corp104_filebeat::install::linux
 #
 # Install the linux filebeat package
 #
 # @summary A simple class to install the filebeat package
 #
-class filebeat::install::linux {
+class corp104_filebeat::install::linux {
   if $::kernel != 'Linux' {
-    fail('filebeat::install::linux shouldn\'t run on Windows')
+    fail('corp104_filebeat::install::linux shouldn\'t run on Windows')
   }
 
   package {'filebeat':
-    ensure => $filebeat::package_ensure,
+    ensure => $corp104_filebeat::package_ensure,
   }
 }

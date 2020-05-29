@@ -1,15 +1,15 @@
-# filebeat::repo
+# corp104_filebeat::repo
 #
 # Manage the repository for Filebeat (Linux only for now)
 #
 # @summary Manages the yum, apt, and zypp repositories for Filebeat
-class filebeat::repo {
-  $debian_repo_url = "https://artifacts.elastic.co/packages/${filebeat::major_version}.x/apt"
-  $yum_repo_url = "https://artifacts.elastic.co/packages/${filebeat::major_version}.x/yum"
+class corp104_filebeat::repo {
+  $debian_repo_url = "https://artifacts.elastic.co/packages/${corp104_filebeat::major_version}.x/apt"
+  $yum_repo_url = "https://artifacts.elastic.co/packages/${corp104_filebeat::major_version}.x/yum"
 
   case $::osfamily {
     'Debian': {
-      if $::filebeat::manage_apt == true {
+      if $::corp104_filebeat::manage_apt == true {
         include ::apt
       }
 
@@ -17,11 +17,11 @@ class filebeat::repo {
 
       if !defined(Apt::Source['beats']){
         apt::source { 'beats':
-          ensure   => $::filebeat::alternate_ensure,
+          ensure   => $::corp104_filebeat::alternate_ensure,
           location => $debian_repo_url,
           release  => 'stable',
           repos    => 'main',
-          pin      => $::filebeat::repo_priority,
+          pin      => $::corp104_filebeat::repo_priority,
           key      => {
             id     => '46095ACC8548582C1A2699A9D27D666CD88E42B4',
             source => 'https://artifacts.elastic.co/GPG-KEY-elasticsearch',
@@ -32,12 +32,12 @@ class filebeat::repo {
     'RedHat', 'Linux': {
       if !defined(Yumrepo['beats']){
         yumrepo { 'beats':
-          ensure   => $::filebeat::alternate_ensure,
+          ensure   => $::corp104_filebeat::alternate_ensure,
           descr    => 'elastic beats repo',
           baseurl  => $yum_repo_url,
           gpgcheck => 1,
           gpgkey   => 'https://artifacts.elastic.co/GPG-KEY-elasticsearch',
-          priority => $::filebeat::repo_priority,
+          priority => $::corp104_filebeat::repo_priority,
           enabled  => 1,
           notify   => Exec['flush-yum-cache'],
         }
@@ -57,7 +57,7 @@ class filebeat::repo {
       }
       if !defined(Zypprepo['beats']){
         zypprepo { 'beats':
-          ensure      => $::filebeat::alternate_ensure,
+          ensure      => $::corp104_filebeat::alternate_ensure,
           baseurl     => $yum_repo_url,
           enabled     => 1,
           autorefresh => 1,
@@ -69,7 +69,7 @@ class filebeat::repo {
       }
     }
     default: {
-      fail($filebeat::osfamily_fail_message)
+      fail($corp104_filebeat::osfamily_fail_message)
     }
   }
 

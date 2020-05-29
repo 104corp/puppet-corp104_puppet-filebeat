@@ -1,7 +1,7 @@
 ---
 filebeat:
   prospectors:
-    - <% if scope.function_versioncmp([scope.lookupvar('filebeat::major_version'), '6']) >= 0 %>type<% else %>input_type<% end %>: <%= @input_type %>
+    - <% if scope.function_versioncmp([scope.lookupvar('corp104_filebeat::major_version'), '6']) >= 0 %>type<% else %>input_type<% end %>: <%= @input_type %>
       paths:
         <%- @paths.each do |log_path| -%>
         - <%= log_path %>

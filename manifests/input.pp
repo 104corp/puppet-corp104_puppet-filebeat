@@ -1,12 +1,12 @@
-# filebeat::input
+# corp104_filebeat::input
 #
 # A description of what this defined type does
 #
 # @summary A short summary of the purpose of this defined type.
 #
 # @example
-#   filebeat::input { 'namevar': }
-define filebeat::input (
+#   corp104_filebeat::input { 'namevar': }
+define corp104_filebeat::input (
   Enum['absent', 'present'] $ensure        = present,
   Array[String] $paths                     = [],
   Array[String] $exclude_files             = [],
@@ -20,7 +20,7 @@ define filebeat::input (
   String $encoding                         = 'plain',
   String $input_type                       = 'log',
   Hash $fields                             = {},
-  Boolean $fields_under_root               = $filebeat::fields_under_root,
+  Boolean $fields_under_root               = $corp104_filebeat::fields_under_root,
   Optional[String] $ignore_older           = undef,
   Optional[String] $close_older            = undef,
   String $doc_type                         = 'log',
@@ -51,13 +51,13 @@ define filebeat::input (
   Boolean $pure_array                      = false,
 ) {
 
-  $input_template = $filebeat::major_version ? {
+  $input_template = $corp104_filebeat::major_version ? {
     '5'     => 'prospector.yml.erb',
     default => 'input.yml.erb',
   }
 
-  if 'filebeat_version' in $facts and $facts['filebeat_version'] != false {
-    $skip_validation = versioncmp($facts['filebeat_version'], $filebeat::major_version) ? {
+  if 'filebeat_ver' in $facts and $facts['filebeat_ver'] != false {
+    $skip_validation = versioncmp($facts['filebeat_ver'], $corp104_filebeat::major_version) ? {
       -1      => true,
       default => false,
     }
@@ -67,19 +67,19 @@ define filebeat::input (
 
   case $::kernel {
     'Linux', 'OpenBSD' : {
-      $validate_cmd = ($filebeat::disable_config_test or $skip_validation) ? {
+      $validate_cmd = ($corp104_filebeat::disable_config_test or $skip_validation) ? {
         true    => undef,
-        default => $filebeat::major_version ? {
-          '5'     => "\"${filebeat::filebeat_path}\" -N -configtest -c \"%\"",
-          default => "\"${filebeat::filebeat_path}\" -c \"${filebeat::config_file}\" test config",
+        default => $corp104_filebeat::major_version ? {
+          '5'     => "\"${corp104_filebeat::filebeat_path}\" -N -configtest -c \"%\"",
+          default => "\"${corp104_filebeat::filebeat_path}\" -c \"${corp104_filebeat::config_file}\" test config",
         },
       }
       file { "filebeat-${name}":
         ensure       => $ensure,
-        path         => "${filebeat::config_dir}/${name}.yml",
+        path         => "${corp104_filebeat::config_dir}/${name}.yml",
         owner        => 'root',
         group        => '0',
-        mode         => $::filebeat::config_file_mode,
+        mode         => $::corp104_filebeat::config_file_mode,
         content      => template("${module_name}/${input_template}"),
         validate_cmd => $validate_cmd,
         notify       => Service['filebeat'],
@@ -88,16 +88,16 @@ define filebeat::input (
     }
 
     'FreeBSD' : {
-      $validate_cmd = ($filebeat::disable_config_test or $skip_validation) ? {
+      $validate_cmd = ($corp104_filebeat::disable_config_test or $skip_validation) ? {
         true    => undef,
         default => '/usr/local/sbin/filebeat -N -configtest -c %',
       }
       file { "filebeat-${name}":
         ensure       => $ensure,
-        path         => "${filebeat::config_dir}/${name}.yml",
+        path         => "${corp104_filebeat::config_dir}/${name}.yml",
         owner        => 'root',
         group        => 'wheel',
-        mode         => $::filebeat::config_file_mode,
+        mode         => $::corp104_filebeat::config_file_mode,
         content      => template("${module_name}/${input_template}"),
         validate_cmd => $validate_cmd,
         notify       => Service['filebeat'],
@@ -106,20 +106,20 @@ define filebeat::input (
     }
 
     'Windows' : {
-      $cmd_install_dir = regsubst($filebeat::install_dir, '/', '\\', 'G')
+      $cmd_install_dir = regsubst($corp104_filebeat::install_dir, '/', '\\', 'G')
       $filebeat_path = join([$cmd_install_dir, 'Filebeat', 'filebeat.exe'], '\\')
 
-      $validate_cmd = ($filebeat::disable_config_test or $skip_validation) ? {
+      $validate_cmd = ($corp104_filebeat::disable_config_test or $skip_validation) ? {
         true    => undef,
-        default => $facts['filebeat_version'] ? {
+        default => $facts['filebeat_ver'] ? {
           '5'     => "\"${filebeat_path}\" -N -configtest -c \"%\"",
-          default => "\"${filebeat_path}\" -c \"${filebeat::config_file}\" test config",
+          default => "\"${filebeat_path}\" -c \"${corp104_filebeat::config_file}\" test config",
         },
       }
 
       file { "filebeat-${name}":
         ensure       => $ensure,
-        path         => "${filebeat::config_dir}/${name}.yml",
+        path         => "${corp104_filebeat::config_dir}/${name}.yml",
         content      => template("${module_name}/${input_template}"),
         validate_cmd => $validate_cmd,
         notify       => Service['filebeat'],
@@ -128,7 +128,7 @@ define filebeat::input (
     }
 
     default : {
-      fail($filebeat::kernel_fail_message)
+      fail($corp104_filebeat::kernel_fail_message)
     }
 
   }

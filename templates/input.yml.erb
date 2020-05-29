@@ -1,5 +1,5 @@
 <%- if @pure_array -%>
-<%= scope['filebeat::inputs'].to_yaml() %>
+<%= scope['corp104_filebeat::inputs'].to_yaml() %>
 <%- else -%>
 ---
 - type: <%= @input_type %>

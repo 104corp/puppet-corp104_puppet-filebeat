@@ -48,71 +48,71 @@
 # @param inputs_merge [Boolean] Whether $inputs should merge all hiera sources, or use simple automatic parameter lookup
 # proxy_address [String] Proxy server to use for downloading files
 # @param xpack [Hash] Configuration items to export internal stats to a monitoring Elasticsearch cluster
-class filebeat (
-  String  $package_ensure                                             = $filebeat::params::package_ensure,
-  Boolean $manage_repo                                                = $filebeat::params::manage_repo,
-  Boolean $manage_apt                                                 = $filebeat::params::manage_apt,
-  Enum['5','6', '7'] $major_version                                   = $filebeat::params::major_version,
-  Variant[Boolean, Enum['stopped', 'running']] $service_ensure        = $filebeat::params::service_ensure,
-  Boolean $service_enable                                             = $filebeat::params::service_enable,
-  Optional[String]  $service_provider                                 = $filebeat::params::service_provider,
+class corp104_filebeat (
+  String  $package_ensure                                             = $corp104_filebeat::params::package_ensure,
+  Boolean $manage_repo                                                = $corp104_filebeat::params::manage_repo,
+  Boolean $manage_apt                                                 = $corp104_filebeat::params::manage_apt,
+  Enum['5','6', '7'] $major_version                                   = $corp104_filebeat::params::major_version,
+  Variant[Boolean, Enum['stopped', 'running']] $service_ensure        = $corp104_filebeat::params::service_ensure,
+  Boolean $service_enable                                             = $corp104_filebeat::params::service_enable,
+  Optional[String]  $service_provider                                 = $corp104_filebeat::params::service_provider,
   Optional[Integer] $repo_priority                                    = undef,
-  Integer $spool_size                                                 = $filebeat::params::spool_size,
-  String  $idle_timeout                                               = $filebeat::params::idle_timeout,
-  Boolean $publish_async                                              = $filebeat::params::publish_async,
-  String  $config_file                                                = $filebeat::params::config_file,
-  Optional[String] $config_file_owner                                 = $filebeat::params::config_file_owner,
-  Optional[String] $config_file_group                                 = $filebeat::params::config_file_group,
-  String[4,4]  $config_dir_mode                                       = $filebeat::params::config_dir_mode,
-  String  $config_dir                                                 = $filebeat::params::config_dir,
-  String[4,4]  $config_file_mode                                      = $filebeat::params::config_file_mode,
-  Optional[String] $config_dir_owner                                  = $filebeat::params::config_dir_owner,
-  Optional[String] $config_dir_group                                  = $filebeat::params::config_dir_group,
-  Boolean $purge_conf_dir                                             = $filebeat::params::purge_conf_dir,
-  String  $modules_dir                                                = $filebeat::params::modules_dir,
-  Boolean $enable_conf_modules                                        = $filebeat::params::enable_conf_modules,
-  Hash    $http                                                       = $filebeat::params::http,
-  Hash    $outputs                                                    = $filebeat::params::outputs,
-  Hash    $shipper                                                    = $filebeat::params::shipper,
-  Hash    $logging                                                    = $filebeat::params::logging,
-  Hash    $run_options                                                = $filebeat::params::run_options,
-  String  $conf_template                                              = $filebeat::params::conf_template,
+  Integer $spool_size                                                 = $corp104_filebeat::params::spool_size,
+  String  $idle_timeout                                               = $corp104_filebeat::params::idle_timeout,
+  Boolean $publish_async                                              = $corp104_filebeat::params::publish_async,
+  String  $config_file                                                = $corp104_filebeat::params::config_file,
+  Optional[String] $config_file_owner                                 = $corp104_filebeat::params::config_file_owner,
+  Optional[String] $config_file_group                                 = $corp104_filebeat::params::config_file_group,
+  String[4,4]  $config_dir_mode                                       = $corp104_filebeat::params::config_dir_mode,
+  String  $config_dir                                                 = $corp104_filebeat::params::config_dir,
+  String[4,4]  $config_file_mode                                      = $corp104_filebeat::params::config_file_mode,
+  Optional[String] $config_dir_owner                                  = $corp104_filebeat::params::config_dir_owner,
+  Optional[String] $config_dir_group                                  = $corp104_filebeat::params::config_dir_group,
+  Boolean $purge_conf_dir                                             = $corp104_filebeat::params::purge_conf_dir,
+  String  $modules_dir                                                = $corp104_filebeat::params::modules_dir,
+  Boolean $enable_conf_modules                                        = $corp104_filebeat::params::enable_conf_modules,
+  Hash    $http                                                       = $corp104_filebeat::params::http,
+  Hash    $outputs                                                    = $corp104_filebeat::params::outputs,
+  Hash    $shipper                                                    = $corp104_filebeat::params::shipper,
+  Hash    $logging                                                    = $corp104_filebeat::params::logging,
+  Hash    $run_options                                                = $corp104_filebeat::params::run_options,
+  String  $conf_template                                              = $corp104_filebeat::params::conf_template,
   Optional[Variant[Stdlib::HTTPUrl, Stdlib::HTTPSUrl]] $download_url  = undef, # lint:ignore:140chars
-  Optional[String]  $install_dir                                      = $filebeat::params::install_dir,
-  String  $tmp_dir                                                    = $filebeat::params::tmp_dir,
-  String  $shutdown_timeout                                           = $filebeat::params::shutdown_timeout,
-  String  $beat_name                                                  = $filebeat::params::beat_name,
-  Array   $tags                                                       = $filebeat::params::tags,
-  Optional[Integer] $max_procs                                        = $filebeat::params::max_procs,
-  Hash $fields                                                        = $filebeat::params::fields,
-  Boolean $fields_under_root                                          = $filebeat::params::fields_under_root,
-  Boolean $disable_config_test                                        = $filebeat::params::disable_config_test,
+  Optional[String]  $install_dir                                      = $corp104_filebeat::params::install_dir,
+  String  $tmp_dir                                                    = $corp104_filebeat::params::tmp_dir,
+  String  $shutdown_timeout                                           = $corp104_filebeat::params::shutdown_timeout,
+  String  $beat_name                                                  = $corp104_filebeat::params::beat_name,
+  Array   $tags                                                       = $corp104_filebeat::params::tags,
+  Optional[Integer] $max_procs                                        = $corp104_filebeat::params::max_procs,
+  Hash $fields                                                        = $corp104_filebeat::params::fields,
+  Boolean $fields_under_root                                          = $corp104_filebeat::params::fields_under_root,
+  Boolean $disable_config_test                                        = $corp104_filebeat::params::disable_config_test,
   Array   $processors                                                 = [],
   Hash    $monitoring                                                 = {},
   Variant[Hash, Array] $inputs                                        = {},
   Hash    $setup                                                      = {},
   Array   $modules                                                    = [],
   Optional[Variant[Stdlib::HTTPUrl, Stdlib::HTTPSUrl]] $proxy_address = undef, # lint:ignore:140chars
-  Stdlib::Absolutepath $filebeat_path                                 = $filebeat::params::filebeat_path,
-  Optional[Hash] $xpack                                               = $filebeat::params::xpack,
+  Stdlib::Absolutepath $filebeat_path                                 = $corp104_filebeat::params::filebeat_path,
+  Optional[Hash] $xpack                                               = $corp104_filebeat::params::xpack,
 
   Integer $queue_size                                                 = 4096,
   String $registry_file                                               = 'filebeat.yml',
 
   Optional[String] $systemd_beat_log_opts_override                    = undef,
-  String $systemd_beat_log_opts_template                              = $filebeat::params::systemd_beat_log_opts_template,
-  String $systemd_override_dir                                        = $filebeat::params::systemd_override_dir,
+  String $systemd_beat_log_opts_template                              = $corp104_filebeat::params::systemd_beat_log_opts_template,
+  String $systemd_override_dir                                        = $corp104_filebeat::params::systemd_override_dir,
 
-) inherits filebeat::params {
+) inherits corp104_filebeat::params {
 
   include ::stdlib
 
   $real_download_url = $download_url ? {
-    undef   => "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${package_ensure}-windows-${filebeat::params::url_arch}.zip",
+    undef   => "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${package_ensure}-windows-${corp104_filebeat::params::url_arch}.zip",
     default => $download_url,
   }
 
-  if $config_file != $filebeat::params::config_file {
+  if $config_file != $corp104_filebeat::params::config_file {
     warning('You\'ve specified a non-standard config_file location - filebeat may fail to start unless you\'re doing something to fix this')
   }
 
@@ -133,25 +133,25 @@ class filebeat (
   # If we're removing filebeat, do things in a different order to make sure
   # we remove as much as possible
   if $package_ensure == 'absent' {
-    anchor { 'filebeat::begin': }
-    -> class { '::filebeat::config': }
-    -> class { '::filebeat::install': }
-    -> class { '::filebeat::service': }
-    -> anchor { 'filebeat::end': }
+    anchor { 'corp104_filebeat::begin': }
+    -> class { '::corp104_filebeat::config': }
+    -> class { '::corp104_filebeat::install': }
+    -> class { '::corp104_filebeat::service': }
+    -> anchor { 'corp104_filebeat::end': }
   } else {
-    anchor { 'filebeat::begin': }
-    -> class { '::filebeat::install': }
-    -> class { '::filebeat::config': }
-    -> class { '::filebeat::service': }
-    -> anchor { 'filebeat::end': }
+    anchor { 'corp104_filebeat::begin': }
+    -> class { '::corp104_filebeat::install': }
+    -> class { '::corp104_filebeat::config': }
+    -> class { '::corp104_filebeat::service': }
+    -> anchor { 'corp104_filebeat::end': }
   }
 
   if $package_ensure != 'absent' {
     if !empty($inputs) {
       if $inputs =~ Array {
-        create_resources('filebeat::input', { 'inputs' => { pure_array => true } })
+        create_resources('corp104_filebeat::input', { 'inputs' => { pure_array => true } })
       } else {
-        create_resources('filebeat::input', $inputs)
+        create_resources('corp104_filebeat::input', $inputs)
       }
     }
   }

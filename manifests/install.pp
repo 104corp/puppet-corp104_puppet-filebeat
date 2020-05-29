@@ -1,43 +1,43 @@
-# filebeat::install
+# corp104_filebeat::install
 #
 # A private class to manage the installation of Filebeat
 #
 # @summary A private class that manages the install of Filebeat
-class filebeat::install {
-  anchor { 'filebeat::install::begin': }
+class corp104_filebeat::install {
+  anchor { 'corp104_filebeat::install::begin': }
 
   case $::kernel {
     'Linux':   {
-      class{ '::filebeat::install::linux':
-        notify => Class['filebeat::service'],
+      class{ '::corp104_filebeat::install::linux':
+        notify => Class['corp104_filebeat::service'],
       }
-      Anchor['filebeat::install::begin'] -> Class['filebeat::install::linux'] -> Anchor['filebeat::install::end']
-      if $::filebeat::manage_repo {
-        class { '::filebeat::repo': }
-        Class['filebeat::repo'] -> Class['filebeat::install::linux']
+      Anchor['corp104_filebeat::install::begin'] -> Class['corp104_filebeat::install::linux'] -> Anchor['corp104_filebeat::install::end']
+      if $::corp104_filebeat::manage_repo {
+        class { '::corp104_filebeat::repo': }
+        Class['corp104_filebeat::repo'] -> Class['corp104_filebeat::install::linux']
       }
     }
     'FreeBSD': {
-      class{ '::filebeat::install::freebsd':
-        notify => Class['filebeat::service'],
+      class{ '::corp104_filebeat::install::freebsd':
+        notify => Class['corp104_filebeat::service'],
       }
-      Anchor['filebeat::install::begin'] -> Class['filebeat::install::freebsd'] -> Anchor['filebeat::install::end']
+      Anchor['corp104_filebeat::install::begin'] -> Class['corp104_filebeat::install::freebsd'] -> Anchor['corp104_filebeat::install::end']
     }
     'OpenBSD': {
-      class{'filebeat::install::openbsd':}
-      Anchor['filebeat::install::begin'] -> Class['filebeat::install::openbsd'] -> Anchor['filebeat::install::end']
+      class{'corp104_filebeat::install::openbsd':}
+      Anchor['corp104_filebeat::install::begin'] -> Class['corp104_filebeat::install::openbsd'] -> Anchor['corp104_filebeat::install::end']
     }
     'Windows': {
-      class{'::filebeat::install::windows':
-        notify => Class['filebeat::service'],
+      class{'::corp104_filebeat::install::windows':
+        notify => Class['corp104_filebeat::service'],
       }
-      Anchor['filebeat::install::begin'] -> Class['filebeat::install::windows'] -> Anchor['filebeat::install::end']
+      Anchor['corp104_filebeat::install::begin'] -> Class['corp104_filebeat::install::windows'] -> Anchor['corp104_filebeat::install::end']
     }
     default:   {
-      fail($filebeat::kernel_fail_message)
+      fail($corp104_filebeat::kernel_fail_message)
     }
   }
 
-  anchor { 'filebeat::install::end': }
+  anchor { 'corp104_filebeat::install::end': }
 
 }

@@ -1,9 +1,9 @@
-# filebeat::params
+# corp104_filebeat::params
 #
 # Set a number of default parameters
 #
 # @summary Set a bunch of default parameters
-class filebeat::params {
+class corp104_filebeat::params {
   $service_ensure           = running
   $service_enable           = true
   $spool_size               = 2048

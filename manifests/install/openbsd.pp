@@ -1,6 +1,6 @@
 # to manage filebeat installation on OpenBSD
-class filebeat::install::openbsd {
+class corp104_filebeat::install::openbsd {
   package {'filebeat':
-    ensure => $filebeat::package_ensure,
+    ensure => $corp104_filebeat::package_ensure,
   }
 }
